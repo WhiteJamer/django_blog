@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'uprofile',
-    'postmanager'
+    'postmanager',
+    'customauth'
 ]
 
 MIDDLEWARE = [
