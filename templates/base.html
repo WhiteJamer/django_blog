@@ -11,23 +11,52 @@
     <title>Dj-Blog</title>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row justify-content-between">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="auth mr-2">
-
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'postmanager:post_list' %}">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'postmanager:post_add' %}">Add post</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'uprofile:user_list' %}">Users</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
 
-            <h5>User: {{ user.get_username }}</h5>
-            <a href="{% url 'logout'%}?next={{request.path}}" class="btn btn-danger">Logout</a>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">{{user.get_username}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+            </li>
 
             {% else %}
-            <h5>Вы не авторизованы</h5>
-            <a href="{% url 'login'%}?next={{request.path}}" class="btn btn-success">Login</a>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
+            </li>
             {% endif %}
+
+        </ul>
+        <div class="auth">
+
         </div>
+
     </div>
-</div>
+</nav>
 
 <div class="container">
     {% block content %}
