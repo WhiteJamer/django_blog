@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'uprofile',
     'postmanager',
-    'customauth'
+    'customauth',
+    'categorymanager'
 ]
 
 MIDDLEWARE = [
