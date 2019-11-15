@@ -7,11 +7,12 @@ from .forms import *
 
 class Login(LoginView):
     authentication_form = MyAuthenticationForm
-    # redirect_authenticated_user = True
+    template_name = 'customauth/login.html'
+    redirect_authenticated_user = True
 
 
 class Logout(LogoutView):
-    pass
+    template_name = 'customauth/logged_out.html'
 
 
 class PasswordReset(PasswordResetView):
