@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^u/', include('uprofile.urls')),
     url(r'^posts/', include('postmanager.urls')),
+    url(r'^categories/', include('categorymanager.urls')),
     url(r'^auth/', include('customauth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
