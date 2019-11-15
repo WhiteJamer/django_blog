@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from pytils.translit import slugify
 
 class Category(models.Model):
@@ -11,3 +12,5 @@ class Category(models.Model):
         if not self.id:
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse_lazy('categorymanager:category_detail', kwargs={'slug':self.slug})
