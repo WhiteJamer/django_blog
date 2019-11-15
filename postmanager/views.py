@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView, View
 from .models import Post
 from .forms import PostForm
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 class PostList(ListView):
@@ -13,15 +15,15 @@ class PostDetail(DetailView):
 
 class PostCreate(View):
 
-
+    @method_decorator(login_required)
     def get(self, request):
         context = {'form': PostForm}
         return render(request, 'postmanager/post_add_form.html', context)
 
-
+    @method_decorator(login_required)
     def post(self, request):
         form = PostForm(request.POST)
-        if form.is_valid() and request.user.is_authenticated:
+        if form.is_valid():
             new_post = Post(
                 title=form.cleaned_data['title'],
                 content=form.cleaned_data['content'],
