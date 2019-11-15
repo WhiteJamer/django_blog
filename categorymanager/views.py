@@ -20,8 +20,8 @@ class CategoryCreate(View):
         form = CategoryForm(request.POST)
         if form.is_valid():
             new_category = Category.objects.create(
-                name=form.cleaned_data['name'],
-                owner=request.user)
+                name=form.cleaned_data['name']
+            )
             new_category.save()
             return redirect(new_category)
         return redirect(reverse_lazy('categorymanager:category_create'))
