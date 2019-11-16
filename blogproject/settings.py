@@ -125,5 +125,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'uprofile.User'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL='/auth/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
