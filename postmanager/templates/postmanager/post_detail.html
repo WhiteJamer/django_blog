@@ -3,6 +3,43 @@
 
 <h1>{{post.title}}</h1>
 <p>{{post.content}}</p>
-<p><small>{{post.created_at}}</small> <small><b>{{post.owner}}</b></small></p>
+<p>
+  <small>{{post.created_at}}</small>
+  <small><b>{{post.owner}}</b></small>
+</p>
+<h1 class="mt-3">Leave a comment!</h1>
+<form action="{% url 'commentmanager:comment_add' post.slug %}" method="POST" class="form-group">
+  {% csrf_token %}
+  <textarea name="body" id="body" cols="30" rows="10" class="form-control"
+            placeholder="Write something..."></textarea>
+  <button type="submit" class="btn btn-success form-control">Add Comment</button>
+</form>
+
+{% if post.comments.count > 0 %}
+{% for comment in post.comments.all %}
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+      <img src="/media/no-image.png" class="card-img" alt="preview">
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title"><a href="{{post.get_absolute_url}}">{{comment.owner.username}}</a></h5>
+        <p class="card-text">{{comment.body}}</p>
+        <p class="card-text">
+          <small class="text-muted">{{comment.created_at}}</small>
+          <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Delete</button>
+          </form>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<p><b>Comments not found :(</b></p>
+{% endif %}
 
 {% endblock %}
