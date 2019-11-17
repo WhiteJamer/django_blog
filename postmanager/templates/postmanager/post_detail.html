@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<p>
+  {% for category in post.categories.all %}
+    <a href="{{category.get_absolute_url}}"><b>{{category.name}}</b></a>
+  {% endfor %}
+</p>
 <h1>{{post.title}}</h1>
 <p>{{post.content}}</p>
 <p>
