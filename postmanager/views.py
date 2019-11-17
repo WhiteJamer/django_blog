@@ -30,5 +30,7 @@ class PostCreate(View):
                 owner=request.user
             )
             new_post.save()
+            new_post.categories.set(form.cleaned_data['categories'])
+            new_post.save()
             return redirect(new_post)
         return redirect(reverse_lazy('postmanager:post_add'))
