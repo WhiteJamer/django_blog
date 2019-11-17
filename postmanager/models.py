@@ -11,7 +11,7 @@ class Post(models.Model):
     slug = models.SlugField(blank=True)
     owner = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    categories = models.ManyToManyField(Category, related_name='posts')
+    categories = models.ManyToManyField(Category, related_name='posts', blank=True, null=True)
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.title)
