@@ -5,10 +5,26 @@ from .forms import PostForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 class PostList(ListView):
     model = Post
+    def get_queryset(self):
+        category = self.request.GET.get('category')
+        if category != None:
+            queryset = Post.objects.filter(categories__name__icontains=category)
+        elif self.request.GET.get('query'):
+            q = self.request.GET.get('q')
+            query = Q(title__icontains=q)
+            query.add(Q(content__icontains=q), Q.OR)
+
+            queryset = Post.objects.filter(query)
+            return queryset
+        else:
+            queryset = Post.objects.all()
+            return queryset
+
 
 class PostDetail(DetailView):
     queryset = Post.objects.all()
