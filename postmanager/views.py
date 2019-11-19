@@ -11,10 +11,7 @@ from django.db.models import Q
 class PostList(ListView):
     model = Post
     def get_queryset(self):
-        category = self.request.GET.get('category')
-        if category != None:
-            queryset = Post.objects.filter(categories__name__icontains=category)
-        elif self.request.GET.get('query'):
+        if self.request.GET.get('q'):
             q = self.request.GET.get('q')
             query = Q(title__icontains=q)
             query.add(Q(content__icontains=q), Q.OR)
