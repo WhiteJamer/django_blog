@@ -1,9 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Users List:</h2>
+<h2 class="text-center">Users</h2>
 
-{% for user in user_list %}
-<li><a href="{{user.get_absolute_url}}">{{user.username}}</a></li>
+{% for auser in user_list %}
+<div class="row p-3 wh-color">
+  <div class="col-md-2 align-self-center">
+    <img src="/media/no-image-user.png" class="mr-5 comment-avatar" alt="..." width="100rem">
+  </div>
+  <div class="col-md-2 align-self-center user-list-username">
+    <a href="{{auser.get_absolute_url}}" class=""><h1>{{auser.username}}</h1></a>
+  </div>
+  <div class="col">
+    <div class="row mt-3 justify-content-center">
+      <div class="col-md-2 user-stat">
+        <div class="value text-center text-primary">{{auser.posts.count}}</div>
+        <div class="name text-center text-secondary">posts</div>
+      </div>
+      <div class="col-md-2 user-stat">
+        <div class="value text-center text-primary">{{auser.comments.count}}</div>
+        <div class="name posts-count text-center text-secondary">comments</div>
+      </div>
+      <div class="col-md-2 user-stat">
+        {% if auser.rating >= 0 %}
+          <div class="value text-center text-success">{{auser.rating}}</div>
+        {% else %}
+          <div class="value text-center text-danger">{{auser.rating}}</div>
+        {% endif %}
+        <div class="name text-center text-secondary">rating</div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endfor %}
 
 {% endblock %}
