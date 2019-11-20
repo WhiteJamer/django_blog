@@ -1,8 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="row wh-color">
+  <div class="col-md">
+    <div class="row justify-content-center mt-3">
+      <img src="/media/no-image-user.png" alt="avatar" width="120rem" class="profile-avatar">
+    </div>
+      <h3 class="text-center mt-3">{{auser.username}}</h3>
+    <div class="row justify-content-center mt-3 pb-5">
+      <div class="col-md-2 user-stat">
+        <div class="value text-center text-primary">{{auser.posts.count}}</div>
+        <div class="name text-center text-secondary">posts</div>
+      </div>
+      <div class="col-md-2 user-stat">
+        <div class="value text-center text-primary">{{auser.comments.count}}</div>
+        <div class="name posts-count text-center text-secondary">comments</div>
+      </div>
+      <div class="col-md-2 user-stat">
+        {% if auser.rating >= 0 %}
+          <div class="value text-center text-success">{{auser.rating}}</div>
+        {% else %}
+          <div class="value text-center text-danger">{{auser.rating}}</div>
+        {% endif %}
+        <div class="name text-center text-secondary">rating</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>Страница "{{user.username}}"</h1>
-<h4>{{user.email}}</h4>
-<h4>{{user.is_active}}</h4>
-
+<!--Comment Section -->
+<section class="comment-feed">
+  <div class="row justify-content-center mt-5 wh-color">
+    <div class="col-md">
+      {% if auser.comments %}
+        {% for comment in auser.comments.all %}
+          <div class="media center">
+            <img src="/media/no-image-user.png" class="mr-5 comment-avatar" alt="..." width="100rem">
+            <div class="media-body">
+              <a href="{{comment.post.get_absolute_url}}"><h5 class="mt-0">{{comment.post.title}}</h5></a>
+              <p>{{comment.body}}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="text-muted">Nothing here</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
 {% endblock %}
