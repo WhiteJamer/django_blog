@@ -7,6 +7,9 @@ h1,h2,h3,h4,h5{
     font-family: 'Roboto', sans-serif;
     font-weight: 700
 }
+a:hover{
+    text-decoration: none
+}
 .user-stat:first-child{
     border-left: 0.01rem solid #c9c9c9
 }
@@ -20,14 +23,23 @@ h1,h2,h3,h4,h5{
     font-size: 2rem;
 }
 .profile-avatar{
+    background-color: green;
+
     border-radius: 100%;
+    width: 10rem; height: 10rem;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
 }
 .media.center{
     padding: 1rem;
     border-bottom: 0.01rem solid #c9c9c9
 }
 .comment-avatar{
+    background-color: green;
     border-radius: 100%;
+    width: 5rem; height: 5rem;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
 }
 .wh-color{
     background-color: #fff;
