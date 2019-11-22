@@ -6,6 +6,5 @@ class ProfileForm(ModelForm):
         model = User
         fields = ['avatar']
         widgets = {
-            # 'username':TextInput()
-            # 'avatar':FileInput(attrs={'class':'form-control'})
+            'avatar':FileInput(attrs={'class':'form-control'})
         }
