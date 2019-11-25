@@ -6,12 +6,13 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from el_pagination.views import AjaxListView
 
 
-class PostList(ListView):
+class PostList(AjaxListView):
     model = Post
     context_object_name = 'posts'
-    paginate_by = 10
+    template_name = 'postmanager/post_list.html'
     def get_queryset(self):
         if self.request.GET.get('q'):
             q = self.request.GET.get('q')
