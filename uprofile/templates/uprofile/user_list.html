@@ -1,36 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static '/js/el-pagination.js' %}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 20
+        });
+    </script>
+{% endblock %}
+
 <h1>All users <span class="badge badge-secondary mb-2">{{user_list.count}}</span></h1>
 
-{% for auser in user_list %}
-<div class="row p-3 wh-color">
-  <div class="col-md-2 align-self-center">
-    <div class="mr-5 comment-avatar" style="background-image: url({{auser.avatar.url}});"></div>
-  </div>
-  <div class="col-md-2 align-self-center user-list-username">
-    <a href="{{auser.get_absolute_url}}" ><h5>{{auser.username}}</h5></a>
-  </div>
-  <div class="col">
-    <div class="row mt-3 justify-content-center">
-      <div class="col-md-2 user-stat">
-        <div class="value text-center text-primary">{{auser.posts.count}}</div>
-        <div class="name text-center text-secondary">posts</div>
-      </div>
-      <div class="col-md-2 user-stat">
-        <div class="value text-center text-primary">{{auser.comments.count}}</div>
-        <div class="name posts-count text-center text-secondary">comments</div>
-      </div>
-      <div class="col-md-2 user-stat">
-        {% if auser.rating >= 0 %}
-          <div class="value text-center text-success">{{auser.rating}}</div>
-        {% else %}
-          <div class="value text-center text-danger">{{auser.rating}}</div>
-        {% endif %}
-        <div class="name text-center text-secondary">rating</div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
+{% include 'uprofile/user_list_page.html' %}
 
 {% endblock %}

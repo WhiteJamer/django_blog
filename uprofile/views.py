@@ -6,9 +6,11 @@ from .forms import ProfileForm
 from django.core.files.storage import FileSystemStorage
 from base64 import b64decode
 from django.core.files.base import ContentFile
+from el_pagination.views import AjaxListView
 
-class UserList(ListView):
+class UserList(AjaxListView):
     model = User
+    queryset = User.objects.all()
 
 
 class UserDetail(DetailView):
