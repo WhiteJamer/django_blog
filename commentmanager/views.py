@@ -2,14 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from postmanager.models import Post
-from django.views.generic import ListView, View
+from django.views.generic import View
 from .models import Comment
 from .forms import CommentForm
+from el_pagination.views import AjaxListView
 
-class CommentList(ListView):
+class CommentList(AjaxListView):
     model = Comment
     queryset = Comment.objects.all()
-    paginate_by = 10
     context_object_name = 'comments'
 
 
