@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, View, UpdateView
 from .models import User
 from .forms import ProfileForm
 from django.core.files.storage import FileSystemStorage
+from base64 import b64decode
+from django.core.files.base import ContentFile
 
 class UserList(ListView):
     model = User
@@ -17,21 +20,19 @@ class ProfileUpdate(View):
 
     def get(self, request, slug):
         user = get_object_or_404(User, slug__iexact=slug)
-        form = ProfileForm(instance=user)
-        context = {'form': form}
-        return render(request, 'uprofile/profile_update.html', context)
+        return render(request, 'uprofile/profile_update.html', context={'user':user})
 
     def post(self, request, slug):
+
         user = get_object_or_404(User, slug__iexact=slug)
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            image = form.cleaned_data['avatar']
-            fs = FileSystemStorage()
-            avatar = fs.save(image.name, image)
-            user.avatar = avatar
-            user.save()
-            return redirect(user)
-        return redirect(reverse('uprofile:profile_update', kwargs={'slug':slug}))
+
+        format, imgstr = request.POST.get('avatar').split(';base64,')
+        avatar_data = ContentFile(b64decode(imgstr), request.POST.get('filename'))
+
+        user.avatar = avatar_data
+        updated_user = user.save()
+        data = {'avatar_path':user.avatar.url}
+        return JsonResponse(data)
 
 
 

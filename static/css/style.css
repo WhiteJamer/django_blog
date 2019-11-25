@@ -23,6 +23,7 @@ a:hover{
     font-size: 2rem;
 }
 .profile-avatar{
+    position: relative;
     background-color: green;
 
     border-radius: 100%;
@@ -45,4 +46,16 @@ a:hover{
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+/*UI buttons*/
+.edit-btn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 2rem;
+    background-color: #ededed;
+}
+.edit-btn:hover{
+    cursor: pointer;
+    width: 2.3rem;
 }
