@@ -1,41 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+
+{% load static %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static '/js/el-pagination.js' %}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 20
+        });
+    </script>
+{% endblock %}
+
 <h1 class="text-center">Category List</h1>
-<!--Pagination -->
-{% if is_paginated %}
-  <nav aria-label="..." class="row justify-content-center mt-3">
-    <ul class="pagination">
-      {% if page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">{{page_obj.previous_page_number}}</a></li>
-      {% endif %}
-      <li class="page-item active">
-        <a class="page-link active" href="#">{{page_obj.number}}<span class="sr-only">(current)</span></a>
-      </li>
-      {% if page_obj.has_next %}
-        <li class="page-item"><a class="page-link" href="#">{{page_obj.next_page_number}}</a></li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-        </li>
-      {% endif %}
-    </ul>
-  </nav>
-{% endif %}
-{% for category in categories%}
-<div class="card mb-3">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="/media/no-image.png" class="card-img" alt="preview">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title"><a href="{{category.get_absolute_url}}g">{{category.name}}</a></h5>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
+
+{% include 'categorymanager/category_list_page.html' %}
 
 {% endblock %}

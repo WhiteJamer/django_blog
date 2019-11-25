@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
+from el_pagination.views import AjaxListView
 
 
 class CategoryCreate(View):
@@ -27,10 +28,9 @@ class CategoryCreate(View):
         return redirect(reverse_lazy('categorymanager:category_create'))
 
 
-class CategoryList(ListView):
+class CategoryList(AjaxListView):
     model = Category
     context_object_name = 'categories'
-    paginate_by = 10
 
 
 class CategoryDetail(DetailView):
