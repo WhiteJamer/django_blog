@@ -59,3 +59,8 @@ a:hover{
     cursor: pointer;
     width: 2.3rem;
 }
+
+.post-detail_title{
+position: relative;
+}
+
