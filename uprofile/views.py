@@ -7,6 +7,8 @@ from django.core.files.storage import FileSystemStorage
 from base64 import b64decode
 from django.core.files.base import ContentFile
 from el_pagination.views import AjaxListView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 class UserList(AjaxListView):
     model = User
@@ -20,20 +22,20 @@ class UserDetail(DetailView):
 
 class ProfileUpdate(View):
 
-    def get(self, request, slug):
-        user = get_object_or_404(User, slug__iexact=slug)
-        return render(request, 'uprofile/profile_update.html', context={'user':user})
-
+    @method_decorator(login_required())
     def post(self, request, slug):
 
         user = get_object_or_404(User, slug__iexact=slug)
 
-        format, imgstr = request.POST.get('avatar').split(';base64,')
-        avatar_data = ContentFile(b64decode(imgstr), request.POST.get('filename'))
+        if request.user.username == user.username:
+            format, imgstr = request.POST.get('avatar').split(';base64,')
+            avatar_data = ContentFile(b64decode(imgstr), request.POST.get('filename'))
 
-        user.avatar = avatar_data
-        updated_user = user.save()
-        data = {'avatar_path':user.avatar.url}
+            user.avatar = avatar_data
+            user.save()
+            data = {'avatar_path': user.avatar.url}
+        else:
+            data = {'failed':True}
         return JsonResponse(data)
 
 
