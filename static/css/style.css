@@ -60,7 +60,21 @@ a:hover{
     width: 2.3rem;
 }
 
+.back-btn{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 2rem;
+    color: #ededed;
+    transition: 0.2s;
+}
+.back-btn:hover{
+   color: #000;
+}
+.post-update_title{
+    position: relative;
+}
 .post-detail_title{
-position: relative;
+    position: relative;
 }
 

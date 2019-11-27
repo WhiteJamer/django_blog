@@ -53,7 +53,33 @@ class PostCreate(View):
         return redirect(reverse_lazy('postmanager:post_add'))
 
 
+class PostUpdate(View):
+
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        if request.user == post.owner:
+            form = PostForm(instance=post)
+            context = {'form':form, 'post':post}
+            return render(request, 'postmanager/post_update_form.html', context)
+        else:
+            return redirect(reverse_lazy('postmanager:post_list.html'))
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.categories.set(form.cleaned_data['categories'])
+            post.save()
+            return redirect(post)
+        return redirect(reverse_lazy('postmanager:post_update', kwargs={'slug':post.slug}))
+
+
 class PostDelete(View):
+
     @method_decorator(login_required)
     def post(self, request, slug):
         post = get_object_or_404(Post, slug__iexact=slug)

@@ -8,7 +8,7 @@
 <div class="post-detail_title">
   <h1 class="p-2 mb-2">{{post.title}}</h1>
   {% if user == post.owner %}
-    <img src="https://image.flaticon.com/icons/png/512/46/46415.png" class="edit-btn mb-2 mr-2" id="avatar-edit" data-toggle="modal" data-target="#av-ed-modal">
+  <a href="{% url 'postmanager:post_update' post.slug %}"><img src="https://image.flaticon.com/icons/png/512/46/46415.png" class="edit-btn mb-2 mr-2" ></a>
   {% endif %}
 </div>
 <p class="wh-color p-2">{{post.content}}</p>
