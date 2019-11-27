@@ -14,10 +14,7 @@
           <small class="text-muted">{{comment.created_at}}</small>
           <small class="text-muted"><b>{{comment.owner}}</b></small>
           {% if user == comment.owner %}
-            <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-warning">Delete</button>
-            </form>
+          <p><a href="#" class="btn btn-warning  comment-delete-btn" commentid="{{comment.pk}}" commentbody="{{comment.body|truncatewords:25}}">Delete</a></p>
           {% endif %}
         </p>
       </div>

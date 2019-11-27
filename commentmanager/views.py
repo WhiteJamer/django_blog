@@ -6,6 +6,7 @@ from django.views.generic import View
 from .models import Comment
 from .forms import CommentForm
 from el_pagination.views import AjaxListView
+from django.http import JsonResponse
 
 class CommentList(AjaxListView):
     model = Comment
@@ -35,9 +36,12 @@ class CommentDelete(View):
     @method_decorator(login_required)
     def post(self, request, pk):
         comment = Comment.objects.get(pk=pk)
-        comment.delete()
-        post = comment.post
-        return redirect(post)
+        if request.user == comment.owner:
+            comment.delete()
+            data = {'info': 'Comment has been deleted'}
+        else:
+            data = {'info':'You is not owner'}
+        return JsonResponse(data)
 
 
 

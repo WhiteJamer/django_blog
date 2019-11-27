@@ -14,8 +14,25 @@
     </script>
 {% endblock %}
 
-<h1 class="text-center">Comment List:</h1>
+<h1>All comments <span class="badge badge-secondary mb-2" id="comments-count">{{comments.count}}</span></h1>
 
-{% include 'commentmanager/comment_list_page.html' %}
+{% if comments.count > 0 %}
+<div id="comment-list">
+  {% include 'commentmanager/comment_list_page.html' %}
+</div>
+{% else %}
+<div class="text-muted">Nothing here</div>
+{% endif %}
 
+<div id='comment-delete-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      {% csrf_token %}
+      <p class="p-5 text-center">Are you sure want to delete <b id="modal-comment-title">Undefined</b></p>
+      <a href="#" id="confirm-delete-comment" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+</div>
+
+<script src="{% static '/js/comment_list.js' %}"></script>
 {% endblock %}
