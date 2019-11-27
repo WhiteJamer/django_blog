@@ -2,6 +2,8 @@
 {% block content %}
 {% load static %}
 
+<h1>All users <span class="badge badge-secondary mb-2">{{user_list.count}}</span></h1>
+
 {% block js %}
     {{ block.super }}
     <script src="{% static '/js/el-pagination.js' %}"></script>
@@ -12,8 +14,6 @@
         });
     </script>
 {% endblock %}
-
-<h1>All users <span class="badge badge-secondary mb-2">{{user_list.count}}</span></h1>
 
 {% include 'uprofile/user_list_page.html' %}
 
