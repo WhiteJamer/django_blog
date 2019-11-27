@@ -5,7 +5,9 @@
   <div class="col-md">
     <div class="row justify-content-center mt-3">
       <div id="profile-avatar" class="profile-avatar" style="background-image: url({{auser.avatar.url}});">
+        {% if user == auser %}
         <img src="https://image.flaticon.com/icons/png/512/46/46415.png" class="edit-btn" id="avatar-edit" data-toggle="modal" data-target="#av-ed-modal">
+        {% endif %}
       </div>
     </div>
       <h3 class="text-center mt-3">{{auser.username}}</h3>
@@ -60,6 +62,9 @@
             <div class="media-body">
               <a href="{{comment.post.get_absolute_url}}"><h5 class="mt-0">{{comment.post.title}}</h5></a>
               <p>{{comment.body}}</p>
+              {% if user == comment.owner %}
+                <p><a href="#" class="btn btn-danger">Delete</a></p>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
