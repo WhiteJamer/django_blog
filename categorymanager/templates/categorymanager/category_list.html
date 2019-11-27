@@ -14,8 +14,40 @@
     </script>
 {% endblock %}
 
-<h1 class="text-center">Category List</h1>
+<a href="#" class="btn btn-primary form-control" id="category-add-btn">Add new Category</a>
+<h1>All categories <span class="badge badge-secondary mb-2" id="categories-count">{{categories.count}}</span></h1>
 
-{% include 'categorymanager/category_list_page.html' %}
+{% if categories.count > 0 %}
+<div id="category-list">
+  {% include 'categorymanager/category_list_page.html' %}
+</div>
+{% else %}
+<div class="text-muted">Nothing here</div>
+{% endif %}
+
+<div id='category-delete-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      {% csrf_token %}
+      <p class="p-5 text-center">Are you sure want to delete <b id="modal-category-title">Undefined</b></p>
+      <a href="#" id="confirm-delete-category" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+</div>
+
+<div id='category-update-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-5">
+      {% csrf_token %}
+      <h3 class="text-center mt-5 mb-3">Write a new name for the category</h3>
+      <form action="" id="category-update_form" class="form-group">
+        <input type="text" name=categoryNameInput class="form-control text-center">
+        <button type="submit" class="btn btn-success form-control" id="confirm-update-category">Сохранить</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="{% static '/js/categories_list.js' %}"></script>
 
 {% endblock %}
