@@ -63,7 +63,10 @@
               <a href="{{comment.post.get_absolute_url}}"><h5 class="mt-0">{{comment.post.title}}</h5></a>
               <p>{{comment.body}}</p>
               {% if user == comment.owner %}
-                <p><a href="#" class="btn btn-danger">Delete</a></p>
+                <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+                  {% csrf_token %}
+                  <p><button href="#" class="btn btn-danger">Delete</button></p>
+                </form>
               {% endif %}
             </div>
           </div>

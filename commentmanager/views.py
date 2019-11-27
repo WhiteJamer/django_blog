@@ -36,12 +36,17 @@ class CommentDelete(View):
     @method_decorator(login_required)
     def post(self, request, pk):
         comment = Comment.objects.get(pk=pk)
-        if request.user == comment.owner:
-            comment.delete()
-            data = {'info': 'Comment has been deleted'}
+        if request.is_ajax():
+            if request.user == comment.owner:
+                comment.delete()
+                data = {'info': 'Comment has been deleted'}
+            else:
+                data = {'info': 'You is not owner'}
+            return JsonResponse(data)
         else:
-            data = {'info':'You is not owner'}
-        return JsonResponse(data)
+            if request.user == comment.owner:
+                comment.delete()
+                return redirect(request.META.get('HTTP_REFERER'))
 
 
 
