@@ -13,10 +13,12 @@
         <p class="card-text">
           <small class="text-muted">{{comment.created_at}}</small>
           <small class="text-muted"><b>{{comment.owner}}</b></small>
-          <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">Delete</button>
-          </form>
+          {% if user == comment.owner %}
+            <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
+          {% endif %}
         </p>
       </div>
     </div>
