@@ -4,12 +4,15 @@
 {% for category in categories%}
 <div class="card mb-3">
   <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="/media/no-image.png" class="card-img" alt="preview">
-    </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title"><a href="{{category.get_absolute_url}}g">{{category.name}}</a></h5>
+        {% if user.is_staff%}
+        <p>
+          <a href="#" class="btn btn-warning  category-delete-btn" categoryslug="{{category.slug}}" categorytitle="{{category.title}}">Delete</a>
+          <a href="#" class="btn btn-primary  category-update-btn">Edit</a>
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>
