@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.decorators import login_required
 from el_pagination.views import AjaxListView
+from django.http import JsonResponse
 
 
 class CategoryCreate(View):
@@ -41,22 +42,29 @@ class CategoryDetail(DetailView):
 class CategoryUpdate(View):
 
     @method_decorator(login_required)
-    def get(self, request, slug):
-        category = get_object_or_404(slug_iexact=slug)
-        form = CategoryForm(instance=category)
-        context = {'form': form}
-        return render(request, 'categorymanager/category_update_form', context)
+    def post(self, request, slug):
+        category = Category.objects.get(slug__iexact=slug)
+        if request.user.is_staff:
+            category.name = request.POST.get('categoryName')
+            category.save()
+            data = {'info':'Category has been updated'}
+            return JsonResponse(data)
+        else:
+            data = {'info': 'You is not staff'}
+            return JsonResponse(data)
+
+
+class CategoryDelete(View):
 
     @method_decorator(login_required)
-    def post(self, request):
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-class CategoryDelete(View):
-    @method_decorator(login_required)
     def post(self, request, slug):
-        category = get_object_or_404(slug_iexact=slug)
-        category.delete()
-        return redirect(reverse_lazy('categorymanager:category_list'))
+        category = Category.objects.get(slug__iexact=slug)
+        if request.user.is_staff:
+            category.delete()
+            data = {'info': 'Category has been deleted'}
+            return JsonResponse(data)
+        else:
+            data = {'info': 'You is not staff'}
+            return JsonResponse(data)
 
 
