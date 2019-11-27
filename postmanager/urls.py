@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import PostList, PostDetail, PostCreate
+from .views import PostList, PostDetail, PostCreate, PostDelete, PostUpdate
 
 app_name = 'postmanager'
 
@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^add/$', PostCreate.as_view(), name='post_add'),
 
     url(r'^(?P<slug>[\w-]+)/$', PostDetail.as_view(), name='post_detail'),
+    url(r'^(?P<slug>[\w-]+)/delete$', PostDelete.as_view(), name='post_delete'),
+    url(r'^(?P<slug>[\w-]+)/edit', PostUpdate.as_view(), name='post_update'),
 ]

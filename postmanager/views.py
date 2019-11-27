@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, View
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, DetailView, View, DeleteView
 from .models import Post
 from .forms import PostForm
 from django.urls import reverse_lazy
@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from el_pagination.views import AjaxListView
+from django.http import JsonResponse
 
 
 class PostList(AjaxListView):
@@ -50,3 +51,44 @@ class PostCreate(View):
             new_post.save()
             return redirect(new_post)
         return redirect(reverse_lazy('postmanager:post_add'))
+
+
+class PostUpdate(View):
+
+    @method_decorator(login_required)
+    def get(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        if request.user == post.owner:
+            form = PostForm(instance=post)
+            context = {'form':form, 'post':post}
+            return render(request, 'postmanager/post_update_form.html', context)
+        else:
+            return redirect(reverse_lazy('postmanager:post_list.html'))
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.categories.set(form.cleaned_data['categories'])
+            post.save()
+            return redirect(post)
+        return redirect(reverse_lazy('postmanager:post_update', kwargs={'slug':post.slug}))
+
+
+class PostDelete(View):
+
+    @method_decorator(login_required)
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        if request.user.username == post.owner.username:
+            post.delete()
+            data = {'done':True}
+            return JsonResponse(data)
+        else:
+            data = {'done': False}
+            return JsonResponse(data)
+
+
