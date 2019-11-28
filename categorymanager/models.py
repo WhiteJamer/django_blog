@@ -14,4 +14,4 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return reverse_lazy('categorymanager:category_detail', kwargs={'slug':self.slug})
+        return reverse_lazy('postmanager:post_list') + '?category={0}'.format(self.slug)
