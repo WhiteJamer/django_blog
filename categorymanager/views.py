@@ -3,7 +3,7 @@ from .forms import  CategoryForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from el_pagination.views import AjaxListView
 from django.http import JsonResponse
@@ -32,12 +32,6 @@ class CategoryCreate(View):
 class CategoryList(AjaxListView):
     model = Category
     context_object_name = 'categories'
-
-
-class CategoryDetail(DetailView):
-    model = Category
-    context_object_name = 'category'
-
 
 class CategoryUpdate(View):
 

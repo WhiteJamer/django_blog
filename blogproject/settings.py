@@ -133,10 +133,16 @@ LOGIN_URL='/auth/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # TinyMCE
+TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
+
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
+    'height' : 1500,
+    'plugins': "image,imagetools,media,codesample,link,code",
     'cleanup_on_startup': True,
+    'menubar': True,
+    'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | link image media codesample code",
+    'image_caption': True,
+    'image_advtab': True,
     'custom_undo_redo_levels': 10,
 }
 

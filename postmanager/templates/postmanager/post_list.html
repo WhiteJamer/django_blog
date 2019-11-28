@@ -7,45 +7,52 @@
 {% block content %}
 
 {% block js %}
-    {{ block.super }}
-    <script src="{% static '/js/el-pagination.js' %}"></script>
-    <script>
+{{ block.super }}
+<script src="{% static '/js/el-pagination.js' %}"></script>
+<script>
         $.endlessPaginate({
             paginateOnScroll: true,
             paginateOnScrollMargin: 20
         });
-    </script>
+
+
+</script>
 {% endblock %}
 
+<div class="row justify-content-center">
+  <div class="col-md-10">
 
-<form action="" class="mt-3">
-  <div class="form-row">
-    <div class="col">
-      <input type="text" name="q" placeholder="Search..." class="form-control">
-    </div>
-    <div class="col-1">
-      <button type="submit" class="btn btn-primary form-control">Search</button>
-    </div>
-  </div>
-</form>
+    <form action="" class="mt-3">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" name="q" placeholder="Search..." class="form-control">
+        </div>
+        <div class="col-1">
+          <button type="submit" class="btn btn-primary form-control">Search</button>
+        </div>
+      </div>
+    </form>
 
-<div class="row mt-3">
-  <div class="col">
-    {% if user.is_authenticated %}
-    <a href="{% url 'postmanager:post_add' %}" class="btn btn-primary form-control">Add new post</a>
-    {% endif %}
-  </div>
-</div>
-<div id="post-list" class="post_list mt-2">
-<h1>All posts <span class="badge badge-secondary mb-2" id="posts-count">{{posts.count}}</span></h1>
-{% include 'postmanager/post_list_page.html' %}
-</div>
-<div id='post-delete-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      {% csrf_token %}
-      <p class="p-5 text-center">Are you sure want to delete <b id="modal-post-title">Undefined</b></p>
-      <a href="#" id="confirm-delete-post" class="btn btn-danger">Delete</a>
+    <div class="row mt-3">
+      <div class="col">
+        {% if user.is_authenticated %}
+        <a href="{% url 'postmanager:post_add' %}" class="btn btn-primary form-control">Add new post</a>
+        {% endif %}
+      </div>
+    </div>
+    <div id="post-list" class="post_list mt-2">
+      <h1>All posts <span class="badge badge-secondary mb-2" id="posts-count">{{posts.count}}</span></h1>
+      {% include 'postmanager/post_list_page.html' %}
+    </div>
+    <div id='post-delete-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          {% csrf_token %}
+          <p class="p-5 text-center">Are you sure want to delete <b id="modal-post-title">Undefined</b></p>
+          <a href="#" id="confirm-delete-post" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -7,8 +7,7 @@
   <div class="row no-gutters">
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">К посту - <a href="{{comment.post.get_absolute_url}}">{{comment.post.title}}</a></h5>
-        <p class="card-text"><b>Был оставлен комментарий:</b></p>
+        <h5 class="card-title">Comment was posted on the article - <a href="{{comment.post.get_absolute_url}}">{{comment.post.title}}</a></h5>
         <p class="card-text">{{comment.body}}</p>
         <p class="card-text">
           <small class="text-muted">{{comment.created_at}}</small>
