@@ -15,6 +15,10 @@ class PostList(AjaxListView):
     context_object_name = 'posts'
     template_name = 'postmanager/post_list.html'
     def get_queryset(self):
+        if self.request.GET.get('category'):
+            category = self.request.GET.get('category')
+            queryset = Post.objects.filter(categories__name__iexact=category)
+            return queryset
         if self.request.GET.get('owner'):
             owner = self.request.GET.get('owner')
             queryset = Post.objects.filter(owner__username__iexact=owner)
