@@ -7,8 +7,14 @@ h1,h2,h3,h4,h5{
     font-family: 'Roboto', sans-serif;
     font-weight: 700
 }
+a{
+    color:#171717;
+    transition: 0.1s;
+}
 a:hover{
-    text-decoration: none
+    color:#0090ff;
+    text-decoration: none;
+    transition: 0.1s;
 }
 .user-stat:first-child{
     border-left: 0.01rem solid #c9c9c9
@@ -24,7 +30,7 @@ a:hover{
 }
 .profile-avatar{
     position: relative;
-    background-color: green;
+    background-color: #cfcfcf;
 
     border-radius: 100%;
     width: 10rem; height: 10rem;
