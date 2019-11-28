@@ -30,24 +30,17 @@
 
 {% if post.comments.count > 0 %}
 {% for comment in post.comments.all %}
-<div class="card mb-3">
-  <div class="row no-gutters">
-    <div class="col-md-2">
-      <img src="/media/no-image.png" class="card-img" alt="preview">
-    </div>
-    <div class="col-md-10">
-      <div class="card-body">
-        <h5 class="card-title"><a href="{{post.get_absolute_url}}">{{comment.owner.username}}</a></h5>
-        <p class="card-text">{{comment.body}}</p>
-        <p class="card-text">
-          <small class="text-muted">{{comment.created_at}}</small>
-          <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">Delete</button>
-          </form>
-        </p>
-      </div>
-    </div>
+<div class="media center">
+  <div class="mr-5 comment-avatar" style="background-image: url({{comment.owner.avatar.url}});"></div>
+  <div class="media-body">
+    <h3>{{comment.owner.username}}</h3>
+    <p>{{comment.body}}</p>
+    {% if user == comment.owner %}
+      <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+        {% csrf_token %}
+        <p><button href="#" class="btn btn-danger">Delete</button></p>
+      </form>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
