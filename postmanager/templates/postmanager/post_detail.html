@@ -2,19 +2,19 @@
 {% block content %}
 <p>
   {% for category in post.categories.all %}
-    <a href="{{category.get_absolute_url}}"><b>{{category.name}}</b></a>
+    <a href="{{category.get_absolute_url}}" class="pr-3">{{category.name}}</a>
   {% endfor %}
 </p>
 <div class="post-detail_title">
-  <h1 class="p-2 mb-2">{{post.title}}</h1>
+  <h1 class="mb-5"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h1>
   {% if user == post.owner %}
   <a href="{% url 'postmanager:post_update' post.slug %}"><img src="https://image.flaticon.com/icons/png/512/46/46415.png" class="edit-btn mb-2 mr-2" ></a>
   {% endif %}
 </div>
-<p class="wh-color p-2">{{post.content}}</p>
+{{post.content|safe}}
 <p>
   <small>{{post.created_at}}</small>
-  <small><b>{{post.owner}}</b></small>
+  <small><b><a href="{{post.owner.get_absolute_url}}">{{post.owner}}</a></b></small>
 </p>
 <h1 class="mt-3">Leave a comment!</h1>
 {% if user.is_authenticated %}
@@ -30,24 +30,17 @@
 
 {% if post.comments.count > 0 %}
 {% for comment in post.comments.all %}
-<div class="card mb-3">
-  <div class="row no-gutters">
-    <div class="col-md-2">
-      <img src="/media/no-image.png" class="card-img" alt="preview">
-    </div>
-    <div class="col-md-10">
-      <div class="card-body">
-        <h5 class="card-title"><a href="{{post.get_absolute_url}}">{{comment.owner.username}}</a></h5>
-        <p class="card-text">{{comment.body}}</p>
-        <p class="card-text">
-          <small class="text-muted">{{comment.created_at}}</small>
-          <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-secondary">Delete</button>
-          </form>
-        </p>
-      </div>
-    </div>
+<div class="media center">
+  <div class="mr-5 comment-avatar" style="background-image: url({{comment.owner.avatar.url}});"></div>
+  <div class="media-body">
+    <h3>{{comment.owner.username}}</h3>
+    <p>{{comment.body}}</p>
+    {% if user == comment.owner %}
+      <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+        {% csrf_token %}
+        <p><button href="#" class="btn btn-danger">Delete</button></p>
+      </form>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
