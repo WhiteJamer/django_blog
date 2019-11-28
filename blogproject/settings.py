@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'customauth',
     'categorymanager',
     'commentmanager',
-    'el_pagination'
+    'el_pagination',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,13 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL='/auth/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# TinyMCE
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+
+

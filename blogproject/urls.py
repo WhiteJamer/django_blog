@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^categories/', include('categorymanager.urls')),
     url(r'^comments/', include('commentmanager.urls')),
     url(r'^auth/', include('customauth.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
