@@ -10,8 +10,15 @@ from django.http import JsonResponse
 
 class CommentList(AjaxListView):
     model = Comment
-    queryset = Comment.objects.all()
     context_object_name = 'comments'
+    def get_queryset(self):
+        if self.request.GET.get('owner'):
+            owner = self.request.GET.get('owner')
+            queryset = Comment.objects.filter(owner__username__iexact=owner)
+            return queryset
+        else:
+            queryset = Comment.objects.all()
+            return queryset
 
 
 class CommentCreate(View):

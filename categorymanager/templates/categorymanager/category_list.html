@@ -14,7 +14,7 @@
     </script>
 {% endblock %}
 
-<a href="#" class="btn btn-primary form-control" id="category-add-btn">Add new Category</a>
+<a href="{% url 'categorymanager:category_add' %}" class="btn btn-primary form-control" id="category-add-btn">Add new Category</a>
 <h1>All categories <span class="badge badge-secondary mb-2" id="categories-count">{{categories.count}}</span></h1>
 
 {% if categories.count > 0 %}
