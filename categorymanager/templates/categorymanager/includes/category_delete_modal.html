@@ -1,0 +1,9 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-5">
+    <form action="{% url 'categorymanager:category_delete' category.slug %}" method="POST" id="category-delete-form">
+      {% csrf_token %}
+      <p class="p-5 text-center">Are you sure want to delete <b id="modal-title">{{category.name}}</b></p>
+      <button type="submit" class="btn btn-danger form-control">Delete</button>
+    </form>
+  </div>
+</div>
