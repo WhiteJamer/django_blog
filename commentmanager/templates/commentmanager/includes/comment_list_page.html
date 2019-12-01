@@ -1,0 +1,22 @@
+<a href="#" class="refresh">Refresh</a>
+{% if comments.count > 0 %}
+{% for comment in comments %}
+<div class="media center">
+  <div class="mr-5 comment-avatar" style="background-image: url({{comment.owner.avatar.url}});"></div>
+  <div class="media-body">
+    <h3>{{comment.owner.username}}</h3>
+    <p>{{comment.body}}</p>
+    <p>
+      <small>{{comment.created_at}}</small>
+    </p>
+    {% if user == comment.owner %}
+    <a href="#" data-url="{% url 'commentmanager:comment_delete' comment.pk %}"
+       class="btn btn-danger delete-btn">Delete</a>
+    <a href="#" data-url="{% url 'commentmanager:comment_update' comment.pk %}" class="btn btn-secondary update-btn">Edit</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<p><b>Comments not found :(</b></p>
+{% endif %}

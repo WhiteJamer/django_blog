@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load static %}
+
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-10">
@@ -20,7 +23,7 @@
       </p>
       <h1 class="mt-3">Leave a comment!</h1>
       {% if user.is_authenticated %}
-      <form action="{% url 'commentmanager:comment_add' post.slug %}" method="POST" class="form-group">
+      <form action="{% url 'commentmanager:comment_add' post.slug %}" method="POST" class="form-group" id="add_comment_form">
         {% csrf_token %}
         <textarea name="body" id="body" cols="30" rows="10" class="form-control"
                   placeholder="Write something..."></textarea>
@@ -29,28 +32,18 @@
       {% else%}
       <p>You need a <a href="{% url 'login' %}"><b>Log in</b></a> to leave comment.</p>
       {% endif %}
-
-      {% if post.comments.count > 0 %}
-      {% for comment in post.comments.all %}
-      <div class="media center">
-        <div class="mr-5 comment-avatar" style="background-image: url({{comment.owner.avatar.url}});"></div>
-        <div class="media-body">
-          <h3>{{comment.owner.username}}</h3>
-          <p>{{comment.body}}</p>
-          <p><small>{{comment.created_at}}</small></p>
-          {% if user == comment.owner %}
-            <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
-              {% csrf_token %}
-              <p><button href="#" class="btn btn-danger">Delete</button></p>
-            </form>
-          {% endif %}
-        </div>
+      <input type="hidden" name=postslug value="{{post.slug}}">
+      <div id="comment-list">
+        {% include 'commentmanager/includes/comment_list_page.html' %}
       </div>
-      {% endfor %}
-      {% else %}
-      <p><b>Comments not found :(</b></p>
-      {% endif %}
   </div>
 </div>
+
+<div id='confirm-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <!--  Ajax form load here-->
+</div>
+
+<script src="{% static '/js/post-detail.js' %}"></script>
 
 {% endblock %}
