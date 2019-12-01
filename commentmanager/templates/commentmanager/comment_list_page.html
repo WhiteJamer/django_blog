@@ -12,8 +12,6 @@
         <p class="card-text">
           <small class="text-muted">{{comment.created_at}}</small>
           <small class="text-muted"><b><a href="{{comment.owner.get_absolute_url}}">{{comment.owner}}</a></b></small>
-          {% if user == comment.owner %}
-          <p><a href="#" class="btn btn-warning  comment-delete-btn" commentid="{{comment.pk}}" commentbody="{{comment.body|truncatewords:25}}">Delete</a></p>
           {% endif %}
         </p>
       </div>

@@ -1,0 +1,9 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-5">
+    <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST" id="comment-delete-form">
+      {% csrf_token %}
+      <p class="p-5 text-center">Are you sure want to delete <b id="modal-title">{{comment.body}}</b></p>
+      <button type="submit" class="btn btn-danger form-control">Delete</button>
+    </form>
+  </div>
+</div>
