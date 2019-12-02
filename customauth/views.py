@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, 
     PasswordChangeView, PasswordChangeDoneView, PasswordResetDoneView
 from django.views import View
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate, login
 from .forms import *
 from uprofile.models import User
 
@@ -41,7 +42,9 @@ class Register(View):
                                                 password=password)
                 user.save()
                 user.set_password(user.password)
-
+                user_session = authenticate(username=username,
+                                            password=password)
+                login(request, user_session)
                 return redirect(user)
         else:
             return HttpResponse('You already registered')
