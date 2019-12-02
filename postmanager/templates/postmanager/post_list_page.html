@@ -1,0 +1,23 @@
+{% load el_pagination_tags %}
+
+{% paginate 10 posts %}
+{% for post in posts %}
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md">
+      <div class="card-body">
+        <h1 class="card-title"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h1>
+        {{post.content|truncatewords:200|safe}}
+        <p class="card-text">
+          <small class="text-muted">{{post.created_at}}</small>
+          <small class="text-muted"><b>{{post.owner}}</b></small>
+        </p>
+        {% if user == post.owner %}
+        <p><a href="#" class="btn btn-warning  post-delete-btn">Delete</a></p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% show_more %}

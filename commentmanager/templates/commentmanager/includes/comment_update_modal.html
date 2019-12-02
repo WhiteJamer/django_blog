@@ -1,0 +1,10 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-5">
+    <p class="p-2 text-center">Change comment <b id="modal-title">{{comment.body|truncatewords:150}}</b></p>
+    <form action="{% url 'commentmanager:comment_update' comment.pk %}" method="POST" id="comment-update-form">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit" class="btn btn-success form-control">Save changes</button>
+    </form>
+  </div>
+</div>

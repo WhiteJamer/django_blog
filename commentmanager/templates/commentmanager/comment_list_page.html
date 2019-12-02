@@ -1,0 +1,23 @@
+{% load el_pagination_tags %}
+
+{% paginate 10 comments %}
+
+{% for comment in comments %}
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Comment was posted on the article - <a href="{{comment.post.get_absolute_url}}">{{comment.post.title}}</a></h5>
+        <p class="card-text">{{comment.body}}</p>
+        <p class="card-text">
+          <small class="text-muted">{{comment.created_at}}</small>
+          <small class="text-muted"><b><a href="{{comment.owner.get_absolute_url}}">{{comment.owner}}</a></b></small>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% show_more %}

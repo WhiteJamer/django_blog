@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'uprofile',
     'postmanager',
-    'customauth'
+    'customauth',
+    'categorymanager',
+    'commentmanager',
+    'el_pagination', # Pagination
+    'tinymce', # HTML editor
+    'crispy_forms', #Automation stylize forms
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -116,12 +124,29 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
+    os.path.join(BASE_DIR, "static")
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'uprofile.User'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL='/auth/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# TinyMCE
+TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height' : 1500,
+    'plugins': "image,imagetools,media,codesample,link,code",
+    'cleanup_on_startup': True,
+    'menubar': True,
+    'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | link image media codesample code",
+    'image_caption': True,
+    'image_advtab': True,
+    'custom_undo_redo_levels': 10,
+}
+
+

@@ -1,8 +1,93 @@
 {% extends 'base.html' %}
+{% load static%}
 {% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <div class="row wh-color">
+      <div class="col-md">
+        <div class="row justify-content-center mt-3">
+          <div id="profile-avatar" class="profile-avatar" style="background-image: url({{auser.avatar.url}});">
+            {% if user == auser %}
+            <img src="https://image.flaticon.com/icons/png/512/46/46415.png" class="edit-btn" id="avatar-edit"
+                 data-toggle="modal" data-target="#av-ed-modal">
+            {% endif %}
+          </div>
+        </div>
+        <h3 class="text-center mt-3">{{auser}}</h3>
+        <div class="row justify-content-center mt-3 pb-5">
+          <a href="{% url 'postmanager:post_list' %}?owner={{auser}}" class="col-md-2 user-stat">
+            <div class="value text-center text-primary">{{auser.posts.count}}</div>
+            <div class="name text-center text-secondary">posts</div>
+          </a>
+          <a href="{% url 'commentmanager:comment_list' %}?owner={{auser}}" class="col-md-2 user-stat">
+            <div class="value text-center text-primary">{{auser.comments.count}}</div>
+            <div class="name posts-count text-center text-secondary">comments</div>
+          </a>
+          <a href="{% url 'uprofile:user_list' %}" class="col-md-2 user-stat">
+            {% if auser.rating >= 0 %}
+            <div class="value text-center text-success">{{auser.rating}}</div>
+            {% else %}
+            <div class="value text-center text-danger">{{auser.rating}}</div>
+            {% endif %}
+            <div class="name text-center text-secondary">rating</div>
+          </a>
+        </div>
+      </div>
+    </div>
 
-<h1>Страница "{{user.username}}"</h1>
-<h4>{{user.email}}</h4>
-<h4>{{user.is_active}}</h4>
+    <!-- Avatar edit modal -->
+
+    <div id='av-ed-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <p>Are you sure want to delete <b class="modal-post-title">Undefined</b></p>
+          <form action="{% url 'uprofile:profile_update' auser.slug %}" method="POST" enctype="multipart/form-data"
+                id="image-upload">
+            {% csrf_token %}
+            <input type="file" id='avatar'>
+            <button type="submit">Submit</button>
+          </form>
+
+          <!-- Croppie resizer -->
+          <div id="resizer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Comment Section -->
+    <section class="comment-feed">
+      <div class="row justify-content-center mt-5 wh-color">
+        <div class="col-md">
+          {% if auser.comments %}
+          {% for comment in auser.comments.all %}
+          <div class="media center">
+            <div class="mr-5 comment-avatar" style="background-image: url({{auser.avatar.url}});"></div>
+            <div class="media-body">
+              <a href="{{comment.post.get_absolute_url}}"><h5 class="mt-0">{{comment.post.title}}</h5></a>
+              <p>{{comment.body}}</p>
+              {% if user == comment.owner %}
+              <form action="{% url 'commentmanager:comment_delete' comment.pk %}" method="POST">
+                {% csrf_token %}
+                <p>
+                  <button href="#" class="btn btn-danger">Delete</button>
+                </p>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="text-muted">Nothing here</div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="{% static '/js/croppie.js' %}"></script>
+<script src="{% static '/js/test.js' %}"></script>
 
 {% endblock %}

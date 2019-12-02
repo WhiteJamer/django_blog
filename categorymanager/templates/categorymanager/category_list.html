@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% csrf_token %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <a href="{% url 'categorymanager:category_add' %}" class="btn btn-primary form-control" id="category-add-btn">Add
+      new Category</a>
+    <div id="category-list">
+      {% if categories.count > 0 %}
+      {% include 'categorymanager/includes/category_list_page.html' %}
+      {% else %}
+      <div class="text-muted">Nothing here</div>
+      {% endif %}
+    </div>
+
+    <div id='confirm-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <!--  Ajax form load here-->
+    </div>
+  </div>
+</div>
+
+<script src="{% static '/js/category_list.js' %}"></script>
+
+{% endblock %}

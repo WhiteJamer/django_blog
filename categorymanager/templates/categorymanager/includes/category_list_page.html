@@ -1,0 +1,19 @@
+<h1>All categories <span class="badge badge-secondary mb-2" id="categories-count">{{categories.count}}</span></h1>
+<a href="#" class="refresh btn btn-secondary mb-2">Refresh</a>
+{% for category in categories %}
+<div class="category-item card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><a href="{{category.get_absolute_url}}">{{category.name}}</a></h5>
+        {% if user.is_staff%}
+        <p>
+          <a href="#" class="btn btn-warning  delete-btn" data-url="{% url 'categorymanager:category_delete' category.slug %}">Delete</a>
+          <a href="#" class="btn btn-primary  update-btn" data-url="{% url 'categorymanager:category_update' category.slug %}">Edit</a>
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

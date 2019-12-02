@@ -1,0 +1,10 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-5">
+    <p class="p-2 text-center">Add new category</p>
+    <form action="{% url 'categorymanager:category_add' %}" method="POST" id="category-add-form">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit" class="btn btn-success form-control">Add</button>
+    </form>
+  </div>
+</div>
