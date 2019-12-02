@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'customauth',
     'categorymanager',
     'commentmanager',
-    'el_pagination',
-    'tinymce',
+    'el_pagination', # Pagination
+    'tinymce', # HTML editor
+    'crispy_forms', #Automation stylize forms
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
