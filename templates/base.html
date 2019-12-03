@@ -2,79 +2,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/croppie.css' %}" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    {{ form.media }}
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/croppie.css' %}"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  {{ form.media }}
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 
-    <title>Dj-Blog</title>
+  <title>Dj-Blog</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand" href="{% url 'home' %}">Django Blog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+          aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'postmanager:post_list' %}">Posts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'commentmanager:comment_list' %}">Comments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'categorymanager:category_list' %}">Categories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'uprofile:user_list' %}">Users</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %}
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'postmanager:post_list' %}">Posts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'commentmanager:comment_list' %}">Comments</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'categorymanager:category_list' %}">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'uprofile:user_list' %}">Users</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated %}
 
-            <li class="nav-item active">
-                <a class="nav-link" href="#">{{user.get_username}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
-            </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">{{user.get_username}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+      </li>
 
-            {% else %}
+      {% else %}
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
-            </li>
-            {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'register'%}?next={{request.path}}">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
+      </li>
+      {% endif %}
 
-        </ul>
-        <div class="auth">
-
-        </div>
+    </ul>
+    <div class="auth">
 
     </div>
+
+  </div>
 </nav>
 
 <div class="container-fluid">
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+  {% endblock %}
 </div>
 </body>
 </html>
