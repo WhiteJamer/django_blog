@@ -11,8 +11,6 @@
             paginateOnScroll: true,
             paginateOnScrollMargin: 20
         });
-
-
 </script>
 {% endblock %}
 
@@ -21,41 +19,14 @@
     <h1>All comments <span class="badge badge-secondary mb-2" id="comments-count">{{comments.count}}</span></h1>
     {% if comments.count > 0 %}
     <div id="comment-list">
-
+      {% include 'commentmanager/comment_list_page.html' %}
     </div>
     {% else %}
     <div class="text-muted">Nothing here</div>
     {% endif %}
 
-    <div id='ajax-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <!--Ajax renderer data here-->
-    </div>
   </div>
 </div>
 
-<script src="{% static '/js/ajax-ud.js' %}"></script>
-<script>
-  $(document).ready(function(){
-    ajaxDelete(
-    listName='#comment-list',
-    objects='comments',
-    btnClass='.comment-delete-btn',
-    modalID='#ajax-modal',
-    objClass='.card',
-    csrfToken='input[name=csrfmiddlewaretoken]'
-    );
-
-    ajaxUpdate(
-    listName='#comment-list',
-    objects='comments',
-    btnClass='.comment-update-btn',
-    modalID='#ajax-modal',
-    objClass='.card',
-    csrfToken='input[name=csrfmiddlewaretoken]'
-    );
-  });
-
-</script>
 
 {% endblock %}
