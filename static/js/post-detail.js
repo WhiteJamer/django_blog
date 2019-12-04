@@ -7,7 +7,7 @@ $(document).ready(function(){
 	// Модальное окно для подтверждения запросов
 	var modal = $('#confirm-modal');
 	
-	// [AJAX update comments-section] Обновить секцию категорий при нажатии на кнопку
+	// [AJAX update comments-section] Обновить секцию комментов при нажатии на кнопку
 	$('#comment-list').on('click', '.refresh', function(e){
 		e.preventDefault();
 		// Обновляем блок с категориями
@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 	
 	
-	// [CREATE] Добавление категории
+	// [CREATE] Добавление коммента
 	$('#add_comment_form').on('submit', function(e){
 		e.preventDefault();
 		let form = $(this);
@@ -34,7 +34,7 @@ $(document).ready(function(){
 		});
 	});	
 
-	// [CREATE confirm] Подтверждение на добавление категории
+	// [CREATE confirm] Подтверждение на добавление коммента
 	$(modal).on('submit', '#comment-add-form', function(e){
 		e.preventDefault();
 		let form = $(this);
@@ -54,7 +54,7 @@ $(document).ready(function(){
 		});
 	});
 
-	// [DELETE] Удаление категории 
+	// [DELETE] Удаление коммента
 	$('#comment-list').on('click', '.delete-btn', function(e){
 		e.preventDefault();
 		let url = $(this).attr('data-url')
@@ -97,7 +97,7 @@ $(document).ready(function(){
 	});
 	
 
-	// [UPDATE] Обновление категории
+	// [UPDATE] Обновление комментов
 	$('#comment-list').on('click', '.update-btn', function(e){
 		e.preventDefault();
 		let url = $(this).attr('data-url');
@@ -149,4 +149,20 @@ $(document).ready(function(){
 			}
 		});
 	}
+    // [DELETE] Подтверждение удаления поста
+    $('#delete-post').on('click', function(e){
+        e.preventDefault();
+        $.ajax({
+			type: 'GET',
+			url: $(this).attr('data-url'),
+			success: function (modalData) {
+				modal.html(modalData);
+				modal.modal('show');
+			},
+			error: function(error) {
+				console.log('Error: ' + error);
+				alert('Модальное окно не получено');
+			}
+		});
+    })
 });
