@@ -134,7 +134,7 @@ $(document).ready(function(){
 	});
 
 
-	// [Get all comments function] Обновить секцию с категориями
+	// [Get all comments function] Обновить секцию с комментами
 	function getComments(){
 		let postslug = $('input[name=postslug]').val();
 		$.ajax({
