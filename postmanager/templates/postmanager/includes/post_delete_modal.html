@@ -1,0 +1,9 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-5">
+    <form action="{% url 'postmanager:post_delete' post.slug %}" method="POST" id="post-delete-form">
+      {% csrf_token %}
+      <p class="p-5 text-center">Are you sure want to delete <b id="modal-title">{{post.title}}</b></p>
+      <button type="submit" class="btn btn-danger form-control">Delete</button>
+    </form>
+  </div>
+</div>

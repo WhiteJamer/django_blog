@@ -89,14 +89,21 @@ class PostUpdate(View):
 class PostDelete(View):
 
     @method_decorator(login_required)
+    def get(self, request, slug):
+        post = get_object_or_404(Post, slug__iexact=slug)
+        if request.user.username == post.owner.username:
+            context = {'post':post}
+            return render(request, 'postmanager/includes/post_delete_modal.html', context)
+        else:
+            return JsonResponse('You is not owner')
+
+    @method_decorator(login_required)
     def post(self, request, slug):
         post = get_object_or_404(Post, slug__iexact=slug)
         if request.user.username == post.owner.username:
             post.delete()
-            data = {'done':True}
-            return JsonResponse(data)
+            return redirect(reverse_lazy('postmanager:post_list'))
         else:
-            data = {'done': False}
-            return JsonResponse(data)
+            return JsonResponse('You is not owner')
 
 
