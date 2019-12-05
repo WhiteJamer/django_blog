@@ -9,19 +9,19 @@
 - Для упрощения стилизации форм используется [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms "django-crispy-forms")
 
 ### QuickStart
-You need a Python 3.6 and higher.
+Вам нужен Python 3.6 и выше.
 	
     git clone https://github.com/WhiteJamer/django_blog.git
-In the repository:
+В репозитории:
 
 
     pip install -r requirements.txt
-Set your db and run:
+Выберите базу данных и запустите:
 
 
     python manage.py makemigrations
     python manage.py migrate
-Run the dev server:
+Запустите дев-сервер:
 
 
     python manage.py runserver
