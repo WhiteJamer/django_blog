@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-10 p-3" style="background:#fff">
+  <div class="col-md-10 p-3 post-detail" style="background:#fff">
     {% if user == post.owner %}
         <a href="{% url 'postmanager:post_update' post.slug %}" class="btn btn-secondary mb-3" id="edit-post">Edit</a>
         <a href="#" class="btn btn-warning mb-3" data-url="{% url 'postmanager:post_delete' post.slug %}" id="delete-post">Delete</a>
