@@ -86,4 +86,8 @@ a:hover{
 .asteriskField{
     color: red
 }
-
+@media(max-width: 640px){
+    .card-body img{
+    max-width: 100%;
+    }
+}
