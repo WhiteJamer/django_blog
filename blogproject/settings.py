@@ -123,7 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = 'var/www/blogproject/static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'uprofile.User'
@@ -134,14 +138,15 @@ LOGIN_URL='/auth/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # TinyMCE
-TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
+TINYMCE_JS_URL = STATIC_URL + 'tiny_mce/tiny_mce.js'
+TINYMCE_JS_ROOT = STATIC_ROOT + 'tiny_mce'
 
 TINYMCE_DEFAULT_CONFIG = {
     'height' : 1500,
-    'plugins': "image,imagetools,media,codesample,link,code",
+    'plugins': "media",
     'cleanup_on_startup': True,
     'menubar': True,
-    'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | link image media codesample code",
+    'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | media",
     'image_caption': True,
     'image_advtab': True,
     'custom_undo_redo_levels': 10,
