@@ -89,7 +89,7 @@ $(document).ready(function(){
 			},
 			error: function(error) {
 				console.log('Error: ' + error);
-				alert('Произошла ошибка, категория не удалена!');
+				alert('Произошла ошибка, коммент не удален!');
 			}
 		});
 	  
@@ -128,7 +128,7 @@ $(document).ready(function(){
 				modal.modal('hide');
 			},
 			error: function(error) {
-				alert('Категория не обновлена!');
+				alert('Комментарий не обновлен!');
 			}
 		});
 	});
@@ -145,7 +145,7 @@ $(document).ready(function(){
 			},
 			error: function(error) {
 				console.log('Error: ' + error);
-				alert('Список категорий не получен!');
+				alert('Список комментов не получен!');
 			}
 		});
 	}
