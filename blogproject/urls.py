@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^comments/', include('commentmanager.urls')),
     url(r'^auth/', include('customauth.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^api-auth/', include('rest_framework.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

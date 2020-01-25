@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'el_pagination', # Pagination
     'tinymce', # HTML editor
     'crispy_forms', #Automation stylize forms
+    'rest_framework'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
