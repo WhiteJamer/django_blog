@@ -3,48 +3,88 @@
 {% load static %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-10 p-3 post-detail" style="background:#fff">
-    {% if user == post.owner %}
-        <a href="{% url 'postmanager:post_update' post.slug %}" class="btn btn-secondary mb-3" id="edit-post">Edit</a>
-        <a href="#" class="btn btn-warning mb-3" data-url="{% url 'postmanager:post_delete' post.slug %}" id="delete-post">Delete</a>
-      {% endif %}
-      <p>
-        {% for category in post.categories.all %}
-          <a href="{{category.get_absolute_url}}" class="pr-3">{{category.name}}</a>
-        {% endfor %}
-      </p>
-      <div class="post-detail_title">
-        <h1 class="mb-5"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h1>
-      </div>
-      {{post.content|safe}}
-      <p class="mt-3">
-        <small>{{post.created_at}}</small>
-        <small><b><a href="{{post.owner.get_absolute_url}}">{{post.owner}}</a></b></small>
-      </p>
-      <h1 class="mt-3">Leave a comment!</h1>
-      {% if user.is_authenticated %}
-      <form action="{% url 'commentmanager:comment_add' post.slug %}" method="POST" class="form-group" id="add_comment_form">
-        {% csrf_token %}
-        <textarea name="body" id="body" cols="30" rows="10" class="form-control"
-                  placeholder="Write something..."></textarea>
-        <button type="submit" class="btn btn-success form-control">Add Comment</button>
-      </form>
-      {% else%}
-      <p>You need a <a href="{% url 'login' %}"><b>Log in</b></a> to leave comment.</p>
-      {% endif %}
-      <input type="hidden" name=postslug value="{{post.slug}}">
-      <div id="comment-list">
-        
-      </div>
+<div id="post-detail">
+  <div class="row justify-content-center">
+    <div class="col-md-10 p-3 post-detail" style="background:#fff">
+      {% if user == post.owner %}
+          <a href="{% url 'postmanager:post_update' post.slug %}" class="btn btn-secondary mb-3" id="edit-post">Edit</a>
+          <a href="#" class="btn btn-warning mb-3" data-url="{% url 'postmanager:post_delete' post.slug %}" id="delete-post">Delete</a>
+        {% endif %}
+        <p>
+          {% for category in post.categories.all %}
+            <a href="{{category.get_absolute_url}}" class="pr-3">{{category.name}}</a>
+          {% endfor %}
+        </p>
+        <div class="post-detail_title">
+          <h1 class="mb-5"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h1>
+        </div>
+        {{post.content|safe}}
+        <p class="mt-3">
+          <small>{{post.created_at}}</small>
+          <small><b><a href="{{post.owner.get_absolute_url}}">{{post.owner}}</a></b></small>
+        </p>
+        <h1 class="mt-3">Leave a comment!</h1>
+        {% if user.is_authenticated %}
+        <form action="{% url 'commentmanager:comment_add' post.id %}" method="POST" class="form-group" id="add_comment_form">
+          {% csrf_token %}
+          <textarea name="body" id="body" cols="30" rows="10" class="form-control"
+                    placeholder="Write something..."></textarea>
+          <button type="submit" class="btn btn-success form-control">Add Comment</button>
+        </form>
+        {% else%}
+        <p>You need a <a href="{% url 'login' %}"><b>Log in</b></a> to leave comment.</p>
+        {% endif %}
+        <input type="hidden" name=postslug value="{{post.slug}}">
+        <div id="comment-list">
+          <div class="comment-item row mt-3" v-for="comment in comments">
+            <div class="col-md-auto col-sm-auto comment-item__image-wrapper">
+              <img v-bind:src="comment.owner.avatar" alt="avatar">
+            </div>
+            <div class="col-md col-sm comment-item__info">
+              <h3>
+                <a href="#" class="comment-item__username">{!comment.owner.username!}</a>
+              </h3>
+              <p class="comment-item__body">{!comment.body!}</p>
+              <span class="comment-item__date"><b>{!comment.created_at | formatDate!}</b></span>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </div>
 
-<div id='confirm-modal' class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <!--  Ajax form load here-->
-</div>
+<!-- MomentJS For date & datetime format  (also load russian locale) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ru.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
 
-<script src="{% static '/js/post-detail.js' %}"></script>
+  new Vue({
+    el: '#post-detail',
+    delimiters: ['{!','!}'],
+    data () {
+      return {
+        comments: null,
+        postId: '{{post.id}}'
+      }
+    },
+    filters: {
+      formatDate: function(date){
+        if (!date) return ''
+        console.log(moment.locales());
+
+        return moment(date).startOf('minute').fromNow();  
+      }
+    },
+    mounted () {
+      axios
+        .get(`http://localhost:8000/api/comments/${this.postId}/`)
+        .then(response => (this.comments = response.data))
+    }
+    
+  });
+</script>
 
 {% endblock %}

@@ -7,6 +7,8 @@ from .models import Comment
 from .forms import CommentForm
 from el_pagination.views import AjaxListView
 from django.http import JsonResponse, HttpResponse
+from django.core import serializers
+
 
 class CommentList(AjaxListView):
     model = Comment
@@ -22,29 +24,22 @@ class CommentList(AjaxListView):
             return queryset
 
 
-class PostCommentList(View):
-
-    def get(self, request, postslug):
-        comments = Comment.objects.filter(post__slug__iexact=postslug)
-        context = {'comments': comments}
-        return render(request, 'commentmanager/includes/comment_list_page.html', context)
-
-
 class CommentCreate(View):
 
     @method_decorator(login_required)
-    def post(self, request, post_slug):
+    def post(self, request, post_id):
         form = CommentForm(request.POST)
-        post = get_object_or_404(Post, slug=post_slug)
+        post = get_object_or_404(Post, id=post_id)
         if form.is_valid():
             new_comment = Comment(
-                body = form.cleaned_data['body'],
-                post = post,
-                owner = request.user
+                body=form.cleaned_data['body'],
+                post=post,
+                owner=request.user
             )
             new_comment.save()
             redirect(post)
-        return redirect(reverse('postmanager:post_detail', kwargs={'slug':post.slug}))
+        print(form.errors)
+        return redirect(reverse('postmanager:post_detail', kwargs={'slug': post.slug}))
 
 
 class CommentUpdate(View):
@@ -94,8 +89,3 @@ class CommentDelete(View):
         else:
             data = {'info': 'You is not owner'}
         return JsonResponse(data)
-
-
-
-
-

@@ -86,7 +86,13 @@ a:hover{
 .asteriskField{
     color: red
 }
+.comment-item__image-wrapper img{
+    border-radius: 10rem;
+}
 @media (max-width: 640px){
+    .comment-item__image-wrapper{
+        width: 10rem;
+    }
     .post_list img, .post-detail img{
         width: 100% !important;
         height: auto !important;
