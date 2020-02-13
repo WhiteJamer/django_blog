@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=dev_db
+    restart: always
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - ./.env.dev
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
