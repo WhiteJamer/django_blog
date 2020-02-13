@@ -10,21 +10,27 @@
 
 
 ### QuickStart
-Вам нужен Python 3.6 и выше.
+Скачайте проект и установите [Docker](https://docs.docker.com/install/) и [docker-compose](https://docs.docker.com/compose/install/)
 	
     git clone https://github.com/WhiteJamer/django_blog.git
-В репозитории:
 
-    pip install -r requirements.txt
-Выберите базу данных и запустите:
+Находясь в папке с проектом введите:
+
+		docker-compose up --build
+
+Теперь локальный сервер запущен и вы видите логи базы данных и вашего приложения.
+
+Чтобы вводить комманды внутри вашего приложения откройте bash-консоль внутри с помощью комманды:
+
+		docker-compose exec web bash 
+
+Или можно просто вводить их не проникая в контейнер, например так:
+		
+		docker-compose exec python manage.py makemigrations
 
 
-    python manage.py makemigrations
-    python manage.py migrate
-Запустите дев-сервер:
 
-
-    python manage.py runserver
+    
     
 ![Users list photo](https://i.imgur.com/6Z9dDDs.png)
 ![Update page photo](https://i.imgur.com/FkKq5b6.png)
